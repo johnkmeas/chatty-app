@@ -39,12 +39,13 @@ class App extends Component {
   }
 
   changeUsername(username){
-     const currentName = this.state.currentUser.name;
-    if (currentName != username){
+     // const currentName = this.state.currentUser.name;
+     // console.log('currentName', currentName);
+    if (username){
 
       const sendChangeName = {
         "type": "postNotification",
-        "content": "UserA has changed their name to UserB. to " + username };
+        "content": "A changed there name to " + username };
 
       var newUsername = JSON.stringify(sendChangeName);
       this.socket.send(newUsername);
@@ -73,63 +74,52 @@ class App extends Component {
     this.socket.onmessage = (event) => {
       const broadcastMessage = JSON.parse(event.data);
 
-      const newMessage = {
-        username: broadcastMessage.username,
-        content: broadcastMessage.content, //TODO remove unwanted in message content
-        id: broadcastMessage.id,
-        key: Date.now()
-      };
-      const userNameChange = {
-        currentUser: broadcastMessage.username
-      };
+
+      // const userNameChange = {
+      //   currentUser: broadcastMessage.username
+      // };
 
       // const newUserName = this.state.currentUser.concat(userNameChange);
 
-      const newMessageList = this.state.messages.concat(newMessage);
-
-      this.setState({
-        currentUser: {name: broadcastMessage.username},
-        messages: newMessageList
-      });
-
       if(broadcastMessage.type === 'counter'){
-        console.log('On open counter', broadcastMessage.countLogin)
+        console.log('On open counter', broadcastMessage.countLogin);
         this.setState({
-          currentUser: {name: broadcastMessage.username},
-          messages: newMessageList,
           countLogin: broadcastMessage.countLogin
         });
       }
-      switch(broadcastMessage.type) {
-        case "incomingMessage":
-          // this.setState({
-          //   incomingMessage: { incomingMessage }
-          // });
-          // handle incoming message
-          console.log("incomingMessage", broadcastMessage);
-          break;
-        case "incomingNotification":
-          // handle incoming notification
-          console.log("Name changed", broadcastMessage);
-          this.setState({
-            //
-            incomingMessage: "A User change their name to :"
-          });
-          // this.state.incomingMessage = broadcastMessage.content);
-        break;
-        case "change_color":
-          // handle incoming notification
-          console.log("colorchanged", broadcastMessage.color);
-          this.setState({
-            currentUser: {color: broadcastMessage.color},
-            incomingMessage: "A User change their name to :"
-          });
-          console.log("currentUser color", this.state.currentUser.color);
-          // this.state.incomingMessage = broadcastMessage.content);
-        break;
-        default:
-          // show an error in the console if the message type is unknown
-          throw new Error("Unknown event type " + broadcastMessage.type);
+
+      if(broadcastMessage.type === "incomingMessage"){
+        console.log("incomingMessage", broadcastMessage);
+
+        const newMessage = {
+          username: broadcastMessage.username,
+          content: broadcastMessage.content, //TODO remove unwanted in message content
+          id: broadcastMessage.id,
+          key: Date.now()
+        };
+        const newMessageList = this.state.messages.concat(newMessage);
+
+        this.setState({
+          currentUser: {name: broadcastMessage.username},
+          messages: newMessageList
+        });
+      }
+
+      if(broadcastMessage.type === 'incomingNotification'){
+        console.log("Name changed", broadcastMessage);
+        this.setState({
+          //
+          incomingMessage: broadcastMessage.content
+        });
+      }
+
+      if(broadcastMessage.type === "change_color"){
+
+        console.log("colorchanged", broadcastMessage.color);
+        this.setState({
+          currentUser: {color: broadcastMessage.color}
+        });
+        console.log("currentUser color", this.state.currentUser.color);
       }
     };
 

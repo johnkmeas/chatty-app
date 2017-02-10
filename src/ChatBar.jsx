@@ -24,6 +24,7 @@ class ChatBar extends Component {
 
       // console.log("Enter message", typeof this.state.username, this.state.content);
       // this.socket.send(JSON.stringify({this.state.username, this.state.content}))
+      // console.log('enterUsername: ', this.props.currentUser, 'becomes', this.state.username)
         this.props.changeUser(this.state.username)
     }
   }
