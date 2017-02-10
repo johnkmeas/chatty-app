@@ -20,10 +20,12 @@ class App extends Component {
           key: 456
         }
       ],
-      incomingMessage: 'w',
-      countLogin: 0
+      incomingMessage: 'w'
     };
     this.socket = null;
+  }
+  componentWillMount(){
+
   }
 
   addNewMessage(username, messageContent) {
@@ -59,13 +61,18 @@ class App extends Component {
     const ws = new WebSocket("ws://localhost:4000");
     this.socket = ws;
     this.socket.onopen = function (event) {
-      console.log("Connected to server!");
+      console.log("Connected to server!", event);
+
+      // this.setState({
+      //   countLogin: broadcastMessage.countLogin
+      // });
+
       // console.log(this.socket.send('Sending to server'));
       // this.socket.send('Well this sent to server');
     };
     this.socket.onmessage = (event) => {
       const broadcastMessage = JSON.parse(event.data);
-      console.log("usercount: ", broadcastMessage);
+      console.log("usercount: ", broadcastMessage.countLogin);
       const newMessage = {
         username: broadcastMessage.username,
         content: broadcastMessage.content, //TODO remove unwanted in message content
@@ -82,8 +89,8 @@ class App extends Component {
 
       this.setState({
         currentUser: {name: broadcastMessage.username},
-        messages: newMessageList//,
-        // userCount: broadcastMessage.userCount
+        messages: newMessageList,
+        countLogin: broadcastMessage.countLogin
       });
 
 
@@ -117,13 +124,14 @@ class App extends Component {
 //   componentDidMount()
 // }
 
-
   render() {
     console.log("Rendering <App/>");
     return (
       <div>
-        <nav>
+        <nav className="navbar">
+
           <h1>Chatty</h1>
+          <h5>{this.state.countLogin} Users Online</h5>
         </nav>
         <MessageList incomingMessage={this.state.incomingMessage} messages={this.state.messages}></MessageList>
         <ChatBar changeUser={this.changeUsername.bind(this)} addMessage={this.addNewMessage.bind(this)} currentUser={this.state.currentUser.name}></ChatBar>
