@@ -44,7 +44,7 @@ class App extends Component {
 
       const sendChangeName = {
         "type": "postNotification",
-        "content": "UserA has changed their name to UserB." + username }
+        "content": "UserA has changed their name to UserB." + username };
 
       var newUsername = JSON.stringify(sendChangeName);
       this.socket.send(newUsername);
@@ -111,7 +111,16 @@ class App extends Component {
           });
           // this.state.incomingMessage = broadcastMessage.content);
           break;
-        default:
+          case "change_color":
+          // handle incoming notification
+          console.log("colorchanged", broadcastMessage.color);
+          this.setState({
+            currentUser: {color: broadcastMessage.color},
+            incomingMessage: "A User change their name to :"
+          });
+          console.log("currentUser color", this.state.currentUser.color);
+          // this.state.incomingMessage = broadcastMessage.content);
+          break;        default:
           // show an error in the console if the message type is unknown
           throw new Error("Unknown event type " + broadcastMessage.type);
       }
@@ -123,7 +132,7 @@ class App extends Component {
 //   // more code here..
 //   componentDidMount()
 // }
-
+// .message-username .css({"background-color": message.color});
   render() {
     console.log("Rendering <App/>");
     return (
@@ -133,7 +142,7 @@ class App extends Component {
           <h1>Chatty</h1>
           <h5>{this.state.countLogin} Users Online</h5>
         </nav>
-        <MessageList incomingMessage={this.state.incomingMessage} messages={this.state.messages}></MessageList>
+        <MessageList color={this.state.currentUser.color} incomingMessage={this.state.incomingMessage} messages={this.state.messages}></MessageList>
         <ChatBar changeUser={this.changeUsername.bind(this)} addMessage={this.addNewMessage.bind(this)} currentUser={this.state.currentUser.name}></ChatBar>
       </div>
     );

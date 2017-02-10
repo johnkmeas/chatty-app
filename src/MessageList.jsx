@@ -11,8 +11,11 @@ class MessageList extends Component {
     //   return (<Message username={msg.username} content={msg.content}/>);
     // })
 
-    const msgComps = this.props.messages.map(({ username: uName, content: cnt, key: key }) => {
-      return (<Message username={ uName } content={ cnt } key={ key }/>);
+    const msgComps = this.props.messages.map(({ username: uName, content: cnt, key: key, color: color }) => {
+      console.log('color message:', color)
+      return (
+        <Message username={ uName } content={ cnt } key={ key } color={color}/>
+        );
     })
 
     // const incomeMsg = !this.props.incomingNotification? this.props.incomingNotification : null;
