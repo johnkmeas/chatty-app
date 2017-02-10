@@ -44,7 +44,7 @@ class App extends Component {
 
       const sendChangeName = {
         "type": "postNotification",
-        "content": "UserA has changed their name to UserB." + username };
+        "content": "UserA has changed their name to UserB. to " + username };
 
       var newUsername = JSON.stringify(sendChangeName);
       this.socket.send(newUsername);
@@ -72,7 +72,7 @@ class App extends Component {
     };
     this.socket.onmessage = (event) => {
       const broadcastMessage = JSON.parse(event.data);
-      console.log("usercount: ", broadcastMessage.countLogin);
+
       const newMessage = {
         username: broadcastMessage.username,
         content: broadcastMessage.content, //TODO remove unwanted in message content
@@ -89,11 +89,17 @@ class App extends Component {
 
       this.setState({
         currentUser: {name: broadcastMessage.username},
-        messages: newMessageList,
-        countLogin: broadcastMessage.countLogin
+        messages: newMessageList
       });
 
-
+      if(broadcastMessage.type === 'counter'){
+        console.log('On open counter', broadcastMessage.countLogin)
+        this.setState({
+          currentUser: {name: broadcastMessage.username},
+          messages: newMessageList,
+          countLogin: broadcastMessage.countLogin
+        });
+      }
       switch(broadcastMessage.type) {
         case "incomingMessage":
           // this.setState({
