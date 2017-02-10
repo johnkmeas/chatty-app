@@ -13,18 +13,13 @@ class ChatBar extends Component {
 
   enterMessage(e) {
     if (e.key === 'Enter') {
-      // console.log("Enter message", typeof this.state.username, this.state.content);
-      // this.socket.send(JSON.stringify({this.state.username, this.state.content}));
-
       this.props.addMessage(this.state.username, this.state.content);
     }
   }
+
   enterUsername(e) {
     if (e.key === 'Enter') {
 
-      // console.log("Enter message", typeof this.state.username, this.state.content);
-      // this.socket.send(JSON.stringify({this.state.username, this.state.content}))
-      // console.log('enterUsername: ', this.props.currentUser, 'becomes', this.state.username)
         this.props.changeUser(this.state.username)
     }
   }
@@ -52,4 +47,5 @@ class ChatBar extends Component {
     );
   }
 }
+
 export default ChatBar;

@@ -24,9 +24,6 @@ class App extends Component {
     };
     this.socket = null;
   }
-  componentWillMount(){
-
-  }
 
   addNewMessage(username, messageContent) {
       const newMessage = {
@@ -39,47 +36,28 @@ class App extends Component {
   }
 
   changeUsername(username){
-     // const currentName = this.state.currentUser.name;
-     // console.log('currentName', currentName);
+  //TODO modify so that content shows old user name an the new user name
     if (username){
-
       const sendChangeName = {
         "type": "postNotification",
-        "content": "A changed there name to " + username };
+        "content": "A user's name has changed to " + username };
 
       var newUsername = JSON.stringify(sendChangeName);
       this.socket.send(newUsername);
     }
-
-    // var newUsername = JSON.stringify(username);
-    // this.socket.send(newUsername);
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    // console.log(this.socket);
-    // this.socket.ws();
     const ws = new WebSocket("ws://localhost:4000");
     this.socket = ws;
+
     this.socket.onopen = function (event) {
-      console.log("Connected to server!", event);
-
-      // this.setState({
-      //   countLogin: broadcastMessage.countLogin
-      // });
-
-      // console.log(this.socket.send('Sending to server'));
-      // this.socket.send('Well this sent to server');
+      console.log("Connected to server!");
     };
+
     this.socket.onmessage = (event) => {
       const broadcastMessage = JSON.parse(event.data);
-
-
-      // const userNameChange = {
-      //   currentUser: broadcastMessage.username
-      // };
-
-      // const newUserName = this.state.currentUser.concat(userNameChange);
 
       if(broadcastMessage.type === 'counter'){
         console.log('On open counter', broadcastMessage.countLogin);
@@ -97,6 +75,7 @@ class App extends Component {
           id: broadcastMessage.id,
           key: Date.now()
         };
+
         const newMessageList = this.state.messages.concat(newMessage);
 
         this.setState({
@@ -107,15 +86,15 @@ class App extends Component {
 
       if(broadcastMessage.type === 'incomingNotification'){
         console.log("Name changed", broadcastMessage);
+
         this.setState({
-          //
           incomingMessage: broadcastMessage.content
         });
       }
 
       if(broadcastMessage.type === "change_color"){
-
         console.log("colorchanged", broadcastMessage.color);
+        // TODO implement this color into style of username later
         this.setState({
           currentUser: {color: broadcastMessage.color}
         });
@@ -125,11 +104,6 @@ class App extends Component {
 
   }
 
-// render() {
-//   // more code here..
-//   componentDidMount()
-// }
-// .message-username .css({"background-color": message.color});
   render() {
     console.log("Rendering <App/>");
     return (
