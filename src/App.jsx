@@ -20,7 +20,7 @@ class App extends Component {
           key: 456
         }
       ],
-      incomingMessage: 'w'
+      incomingMessage: ''
     };
     this.socket = null;
   }
@@ -110,8 +110,8 @@ class App extends Component {
             incomingMessage: "A User change their name to :"
           });
           // this.state.incomingMessage = broadcastMessage.content);
-          break;
-          case "change_color":
+        break;
+        case "change_color":
           // handle incoming notification
           console.log("colorchanged", broadcastMessage.color);
           this.setState({
@@ -120,7 +120,8 @@ class App extends Component {
           });
           console.log("currentUser color", this.state.currentUser.color);
           // this.state.incomingMessage = broadcastMessage.content);
-          break;        default:
+        break;
+        default:
           // show an error in the console if the message type is unknown
           throw new Error("Unknown event type " + broadcastMessage.type);
       }
