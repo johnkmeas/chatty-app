@@ -40,7 +40,9 @@ class App extends Component {
     if (username){
       const sendChangeName = {
         "type": "postNotification",
-        "content": "A user's name has changed to " + username };
+        "content": "A user's name has changed to " + username,
+        "username": username
+      };
 
       var newUsername = JSON.stringify(sendChangeName);
       this.socket.send(newUsername);
@@ -79,7 +81,6 @@ class App extends Component {
         const newMessageList = this.state.messages.concat(newMessage);
 
         this.setState({
-          currentUser: {name: broadcastMessage.username},
           messages: newMessageList
         });
       }
@@ -88,6 +89,7 @@ class App extends Component {
         console.log("Name changed", broadcastMessage);
 
         this.setState({
+          currentUser: {name: broadcastMessage.username},
           incomingMessage: broadcastMessage.content
         });
       }
