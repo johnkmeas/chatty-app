@@ -19,12 +19,19 @@ class ChatBar extends Component {
       this.props.addMessage(this.state.username, this.state.content);
     }
   }
+  enterUsername(e) {
+    if (e.key === 'Enter') {
+
+      // console.log("Enter message", typeof this.state.username, this.state.content);
+      // this.socket.send(JSON.stringify({this.state.username, this.state.content}))
+        this.props.changeUser(this.state.username)
+    }
+  }
 
   updateUsername(e) {
     console.log(e.target.value);
     this.setState({username: e.target.value});
   }
-
   updateContent(e) {
     console.log(e.target.value);
     this.setState({content: e.target.value});
@@ -36,7 +43,7 @@ class ChatBar extends Component {
     return (
       <footer className="chatbar">
         <input className="chatbar-username" onChange={this.updateUsername.bind(this)}
-        placeholder={this.props.currentUser} value={this.state.username}/>
+        placeholder={this.props.currentUser} value={this.state.username} onKeyDown={this.enterUsername.bind(this)}/>
 
         <input className="chatbar-message" onChange={this.updateContent.bind(this)}
         value={this.state.content} placeholder="Type a message and hit ENTER" onKeyDown={this.enterMessage.bind(this)}/>
