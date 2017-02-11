@@ -30,6 +30,7 @@ class App extends Component {
         type: 'postMessage',
         username: username,
         content: messageContent,
+        color: this.state.currentUser.color,
         key: Date.now()
       };
     this.socket.send(JSON.stringify(newMessage));
@@ -75,6 +76,7 @@ class App extends Component {
           username: broadcastMessage.username,
           content: broadcastMessage.content, //TODO remove unwanted in message content
           id: broadcastMessage.id,
+          color: broadcastMessage.color,
           key: Date.now()
         };
 
@@ -115,7 +117,7 @@ class App extends Component {
           <h1>Chatty</h1>
           <h5>{this.state.countLogin} Users Online</h5>
         </nav>
-        <MessageList color={this.state.currentUser.color} incomingMessage={this.state.incomingMessage} messages={this.state.messages}></MessageList>
+        <MessageList color={this.state.currentUser.color } incomingMessage={this.state.incomingMessage} messages={this.state.messages}></MessageList>
         <ChatBar changeUser={this.changeUsername.bind(this)} addMessage={this.addNewMessage.bind(this)} currentUser={this.state.currentUser.name}></ChatBar>
       </div>
     );

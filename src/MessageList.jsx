@@ -7,12 +7,15 @@ class MessageList extends Component {
     console.log("Rendering <MessageList/>");
 
     const msgComps = this.props.messages.map(({ username: uName, content: cnt, key: key, color: color }) => {
-      console.log('color message:', color);
       return (
-        <Message username={ uName } content={ cnt } key={ key } color={color}/>
+        <Message username={ uName } content={ cnt } key={ key } color={ color } />
         );
     })
-
+    console.log(this.props.messages)
+    // const colorUsername = {
+    //   color: this.props.color
+    // };
+    console.log("this.props.messages", this.props.messages)
     const incoming = this.props.incomingMessage;
 
     console.log('this.props.incomingMessage',this.props.incomingMessage)
