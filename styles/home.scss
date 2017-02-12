@@ -1,7 +1,13 @@
 h1 {
-  color: black;
   display: inline-block;
-  opacity: 0.6;
+  font-family: Barrio, serif;
+  line-height: 18px;
+  opacity: 0.5;
+  padding: 6px 16px 3px 16px;
+}
+
+h1, p {
+  color: darken($chatbar-color, 12);
 }
 
 h5 {
@@ -15,6 +21,7 @@ p {
   margin: 0;
 }
     @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
+    @import url('https://fonts.googleapis.com/css?family=Barrio');
     @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
     body {
@@ -25,9 +32,10 @@ p {
       margin: 70px 0;
     }
 
+
+
     .chatbar {
-      background: $brand-color;
-      border-top: 1px solid $border-color;
+      background-color: $chatbar-color;
       bottom: 0;
       display: flex;
       left: 0;
@@ -58,6 +66,14 @@ p {
       flex: 2;
     }
 
+    img.background-img {
+      bottom: 0px;
+      height: auto;
+      padding-bottom: 10px;
+      position: absolute;
+      width: 100%;
+    }
+
     input {
       background-color: transparent;
       box-shadow:inset 0 0 5px 5px #888;
@@ -67,12 +83,6 @@ p {
     .message {
       display: flex;
       padding: 5px;
-    }
-
-    .message.system {
-      font-style: italic;
-      padding: 5px 20px;
-      opacity: 0.4;
     }
 
     .message-content,
@@ -86,6 +96,16 @@ p {
       flex: 8;
     }
 
+    .messageList {
+      margin-top: 10%;
+    }
+
+    .message.system {
+      font-style: italic;
+      padding: 5px 20px;
+      opacity: 0.4;
+    }
+
     .message-username {
       flex: 2;
       font-weight: 700;
@@ -94,9 +114,7 @@ p {
     .navbar {
       background: $brand-color;
       border-bottom: 1px solid $border-color;
-      -webkit-box-shadow: 0px 13px 105px -5px rgba(0,0,0,0.75);
-      -moz-box-shadow: 0px 13px 105px -5px rgba(0,0,0,0.75);
-      box-shadow: 0px 13px 105px -5px rgba(0,0,0,0.75);
+     @extend .shadow;
       height: 60px;
       left: 0;
       padding: 0 10px;

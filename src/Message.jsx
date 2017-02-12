@@ -5,7 +5,6 @@ class Message extends Component {
     const userColor = {
       color: this.props.color
     };
-
     // .. code in the render function
     console.log("Rendering <Message/>");
     return (
