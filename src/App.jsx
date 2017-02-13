@@ -90,15 +90,19 @@ class App extends Component {
       if(broadcastMessage.type === 'incomingNotification'){
         console.log("Name changed", broadcastMessage);
 
+        const incomingNotice = {
+          incomingMessage: broadcastMessage.content,
+          key: Date.now()
+        };
+        const incomingNotification = this.state.messages.concat(incomingNotice);
         this.setState({
-          currentUser: {name: broadcastMessage.username},
-          incomingMessage: broadcastMessage.content
+          messages: incomingNotification
         });
       }
 
       if(broadcastMessage.type === "change_color"){
         console.log("colorchanged", broadcastMessage.color);
-        // TODO implement this color into style of username later
+
         this.setState({
           currentUser: {color: broadcastMessage.color}
         });
@@ -108,18 +112,17 @@ class App extends Component {
 
   }
 
-
   render() {
     console.log("Rendering <App/>");
 
     return (
       <div>
         <nav className="navbar">
-          <h1>ChatFor</h1>
+          <h1>Chatty</h1>
           <h5>{this.state.countLogin} Users Online</h5>
         </nav>
         <div><img src={'https://static1.squarespace.com/static/53ceb8c9e4b065e3be15b341/t/556796c2e4b0ac562a5da37d/1432852162641/KIC-Landscape.png'} alt="boohoo" className="background-img"/></div>
-        <MessageList color={this.state.currentUser.color } incomingMessage={this.state.incomingMessage} messages={this.state.messages}></MessageList>
+        <MessageList color={this.state.currentUser.color }  messages={this.state.messages}></MessageList>
         <ChatBar changeUser={this.changeUsername.bind(this)} addMessage={this.addNewMessage.bind(this)} currentUser={this.state.currentUser.name}></ChatBar>
       </div>
     );
