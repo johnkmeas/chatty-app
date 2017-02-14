@@ -6,15 +6,15 @@ class MessageList extends Component {
     // .. code in the render function
     console.log("Rendering <MessageList/>");
 
-    const msgComps = this.props.messages.map(({ username: uName, content: cnt, key: key, color: color, incomingMessage: incomingMessage}) => {
+    const msgComps = this.props.messages.map(({ username, content, key, color, incomingMessage}) => {
       return (
-        <Message username={ uName } content={ cnt } key={ key } color={ color } incomingMessage={incomingMessage}/>
-        );
+        <Message username={ username } content={ content } key={ key } color={ color } incomingMessage={ incomingMessage }/>
+      );
     })
 
     return (
       <div className="messageList">
-        {msgComps}
+        { msgComps }
       </div>
     );
   }
