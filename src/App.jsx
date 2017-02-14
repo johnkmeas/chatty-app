@@ -52,6 +52,8 @@ class App extends Component {
 
   componentDidMount() {
     console.log("componentDidMount <App />");
+    // consider storing the ws or any other address in another place as var
+    // and use as needed, things like this might be repeated several time.
     const ws = new WebSocket("ws://localhost:4000");
     this.socket = ws;
 
@@ -61,22 +63,33 @@ class App extends Component {
 
     this.socket.onmessage = (event) => {
       const broadcastMessage = JSON.parse(event.data);
+      const { 
+        color,
+        content,
+        countLogin,
+        id,
+        type, 
+        username
+      } = broadcastMessage;
 
-      if(broadcastMessage.type === 'counter'){
-        console.log('On open counter', broadcastMessage.countLogin);
+      // there are a lot of 'if' statements here
+      // consider using switch/case in situations like this
+      // as it makes code more readable imo
+      if(type === 'counter'){
+        console.log('On open counter', countLogin);
         this.setState({
-          countLogin: broadcastMessage.countLogin
+          countLogin
         });
       }
 
-      if(broadcastMessage.type === "incomingMessage"){
+      if(type === "incomingMessage"){
         console.log("incomingMessage", broadcastMessage);
 
         const newMessage = {
-          username: broadcastMessage.username,
-          content: broadcastMessage.content, //TODO remove unwanted in message content
-          id: broadcastMessage.id,
-          color: broadcastMessage.color,
+          username,
+          content, //TODO remove unwanted in message content
+          id,
+          color,
           key: Date.now()
         };
 
@@ -87,24 +100,25 @@ class App extends Component {
         });
       }
 
-      if(broadcastMessage.type === 'incomingNotification'){
+      if(type === 'incomingNotification'){
         console.log("Name changed", broadcastMessage);
 
         const incomingNotice = {
-          incomingMessage: broadcastMessage.content,
+          incomingMessage: content,
           key: Date.now()
         };
         const incomingNotification = this.state.messages.concat(incomingNotice);
+
         this.setState({
           messages: incomingNotification
         });
       }
 
-      if(broadcastMessage.type === "change_color"){
+      if(type === "change_color"){
         console.log("colorchanged", broadcastMessage.color);
 
         this.setState({
-          currentUser: {color: broadcastMessage.color}
+          currentUser: { color }
         });
         console.log("currentUser color", this.state.currentUser.color);
       }
