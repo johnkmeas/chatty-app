@@ -39,13 +39,13 @@ class App extends Component {
   changeUsername(username){
   //TODO modify so that content shows old user name an the new user name
     if (username){
-      const sendChangeName = {
-        "type": "postNotification",
-        "content": "A user's name has changed to " + username,
-        "username": username
+      const changeNameContent = {
+        type: "postNotification",
+        content: `A user's name has changed to ${username}`,
+        username
       };
 
-      var newUsername = JSON.stringify(sendChangeName);
+      const newUsername = JSON.stringify(changeNameContent);
       this.socket.send(newUsername);
     }
   }
