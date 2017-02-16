@@ -1,40 +1,20 @@
-React Boilerplate
+
+Chat App
 =====================
 
-A minimal and light dev environment for ReactJS.
+Project from lighthouse-labs
 
-### Usage
+A real-time chat application built on React, Node, Express and using websockets.
 
-Clone the boilerplate and create your own git repo.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+![image of chat app demo](build/demo.jpg)
 
-Install the dependencies and start the server.
+Improvised a theme around a found image. Will replace with stock photo soon.
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+### Get started
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
+clone repo
+Install the node dependencies and start the server.
 
 ### Dependencies
 
